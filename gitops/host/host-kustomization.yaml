@@ -55,3 +55,18 @@ spec:
   dependsOn:
     - name: cert-manager
   interval: 0m30s
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: gateways
+  namespace: flux-system
+spec:
+  sourceRef:
+    kind: GitRepository
+    name: kubespaces-public
+  path: ./gitops/host/infrastructure/gateways
+  prune: false
+  dependsOn:
+    - name: istio
+  interval: 0m30s
