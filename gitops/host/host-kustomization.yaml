@@ -21,7 +21,8 @@ spec:
     kind: GitRepository
     name: kubespaces-public
   path: ./gitops/host/infrastructure/istio-ambient
-  dependsOn: [gateway-api]
+  dependsOn:
+    - name: gateway-api
   prune: false
   interval: 0m30s
 ---
@@ -35,7 +36,8 @@ spec:
     kind: GitRepository
     name: kubespaces-public
   path: ./gitops/host/infrastructure/cert-manager
-  dependsOn: [istio]
+  dependsOn:
+    - name: istio
   prune: false
   interval: 0m30s
 ---
@@ -50,5 +52,6 @@ spec:
     name: kubespaces-public
   path: ./gitops/host/infrastructure/external-dns
   prune: false
-  dependsOn: [cert-manager]
+  dependsOn:
+    - name: cert-manager
   interval: 0m30s

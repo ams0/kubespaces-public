@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: cert-manager-issuers
-      version: v1.15.3
+      version: 0.3.0
       sourceRef:
         kind: HelmRepository
         name: adfinis
@@ -28,5 +28,5 @@ spec:
     mode: enabled
   valuesFrom:
     - kind: ConfigMap
-      name: cert-manager-values
+      name: cert-manager-issuers-values
       valuesKey: values.yaml
