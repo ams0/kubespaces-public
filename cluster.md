@@ -1,0 +1,71 @@
+# Create a cluster for Kubespaces
+
+## Azure
+
+```bash
+export CLUSTER_RG=kubespaces
+export CLUSTER_NAME=kubespaces
+export AKS_VERSION=1.32.0
+export BASE_NODE_COUNT=2
+export NODE_MAX=5
+export NODE_MIN=2
+export TENANT_NODE_MIN_COUNT=0
+export TENANT_NODE_MAX_COUNT=10
+export NODE_SIZE=Standard_D16s_v6
+export LOCATION=northeurope
+```
+
+```bash
+az group create --name $CLUSTER_RG --location $LOCATION
+```
+
+```bash
+az aks create \
+    --resource-group $CLUSTER_RG \
+    --name $CLUSTER_NAME \
+    --node-count $BASE_NODE_COUNT \
+    --min-count 1 \
+    --max-count 5 \
+    --node-vm-size $NODE_SIZE \
+    --generate-ssh-keys \
+    --location $LOCATION \
+    --enable-cluster-autoscaler \
+    --kubernetes-version $AKS_VERSION \
+    --auto-upgrade-channel rapid \
+    --enable-aad \
+    --enable-image-cleaner \
+    --network-plugin azure \
+    --network-plugin-mode overlay \
+    --pod-cidr 192.168.0.0/16 \
+    --network-dataplane cilium \
+    --node-os-upgrade-channel NodeImage \
+    --os-sku AzureLinux 
+
+az aks nodepool add \
+    -g $CLUSTER_RG \
+    --cluster-name $CLUSTER_NAME \
+    --node-count 0 \
+    -e --min-count $TENANT_NODE_MIN_COUNT \
+    --max-count $TENANT_NODE_MAX_COUNT \
+    --priority Spot \
+    --os-type Linux  \
+    --os-sku AzureLinux \
+    --labels "priority=spot"  \
+    -n spot \
+    --vm-set-type VirtualMachineScaleSets
+```
+
+Get the credentials to the cluster:
+
+```bash
+az aks get-credentials --resource-group $CLUSTER_RG --name $CLUSTER_NAME --admin
+```
+
+Install flux (needs the flux cli installed):
+
+```bash
+flux install
+```
+
+
+
