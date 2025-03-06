@@ -8,5 +8,5 @@ spec:
     kind: GitRepository
     name: kubespaces-public
   path: ./gitops/host/infrastructure/istio-ambient
-  prune: true
+  prune: false
   interval: 0m30s
