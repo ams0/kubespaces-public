@@ -6,10 +6,9 @@ metadata:
 spec:
   gatewayClassName: istio
   listeners:
-  - name: api
+  - name: apipassthrough
     hostname: "*.ne.azure.kubespaces.cloud"
     port: 443
-    sectionName: "apipassthrough"
     protocol: TLS
     tls:
       mode: Passthrough
