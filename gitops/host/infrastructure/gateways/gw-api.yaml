@@ -9,7 +9,7 @@ spec:
   - name: api
     hostname: "*.ne.azure.kubespaces.cloud"
     port: 443
-    name: apipassthrough
+    sectionName: "apipassthrough"
     protocol: TLS
     tls:
       mode: Passthrough
