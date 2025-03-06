@@ -9,10 +9,12 @@ export AKS_VERSION=1.32.0
 export BASE_NODE_COUNT=2
 export NODE_MAX=5
 export NODE_MIN=2
+export LOCATION=northeurope
+export NODE_SIZE=Standard_D16s_v6
 export TENANT_NODE_MIN_COUNT=0
 export TENANT_NODE_MAX_COUNT=10
-export NODE_SIZE=Standard_D16s_v6
-export LOCATION=northeurope
+export TENANT_NODE_SIZE=Standard_D16s_v6
+
 ```
 
 ```bash
@@ -39,20 +41,27 @@ az aks create \
     --pod-cidr 192.168.0.0/16 \
     --network-dataplane cilium \
     --node-os-upgrade-channel NodeImage \
-    --os-sku AzureLinux 
+    --os-sku AzureLinux \
+    --enable-managed-identity \
+    --api-server-authorized-ip-ranges 95.99.46.198/32 \
+    --enable-addons azure-policy \
+    --enable-defender 
 
 az aks nodepool add \
     -g $CLUSTER_RG \
     --cluster-name $CLUSTER_NAME \
     --node-count 0 \
-    -e --min-count $TENANT_NODE_MIN_COUNT \
+    --enable-cluster-autoscaler \
+    --min-count $TENANT_NODE_MIN_COUNT \
     --max-count $TENANT_NODE_MAX_COUNT \
     --priority Spot \
     --os-type Linux  \
     --os-sku AzureLinux \
-    --labels "priority=spot"  \
-    -n spot \
-    --vm-set-type VirtualMachineScaleSets
+    --node-vm-size $TENANT_NODE_SIZE \
+    --labels "priority=spot","workload=tenants"  \
+    -n tenants \
+    --mode User \
+    --vm-set-type VirtualMachineScaleSets --no-wait
 ```
 
 Get the credentials to the cluster:
@@ -67,5 +76,8 @@ Install flux (needs the flux cli installed):
 flux install
 ```
 
+Add the flux repo and the first kustomization:
 
+```bash
+kubectl apply -f 
 
