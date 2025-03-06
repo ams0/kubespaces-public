@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 0m30s
-  url: https://github.com/kubespaces-io/kubespaces-public
+  url: https://github.com/ams0/kubespaces-public
   ref:
     branch: main
   ignore: |
