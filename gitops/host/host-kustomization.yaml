@@ -83,5 +83,5 @@ spec:
   path: ./gitops/host/tenants
   prune: false
   dependsOn:
-    - name: istio
+    - name: gateways
   interval: 0m30s
