@@ -8,4 +8,4 @@ spec:
   interval: 5m
   url: oci://ghcr.io/ams0/kubespaces-public/tenant
   ref:
-    tag: latest
+    tag: 0.1.3

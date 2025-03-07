@@ -26,6 +26,5 @@ jobs:
             helm registry login -u ams0 -p $GH_TOKEN ghcr.io
             helm package  -u .
             helm push tenant-${CHART_VERSION}.tgz oci://ghcr.io/${{ github.repository }}
-            helm push tenant-${CHART_VERSION}.tgz oci://ghcr.io/${{ github.repository }}:latest
           env:
             GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
