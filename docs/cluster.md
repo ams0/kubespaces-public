@@ -76,8 +76,32 @@ Install flux (needs the flux cli installed):
 flux install
 ```
 
+Create the secrets before continuing, check secrets.md for more information.
+
 Add the flux repo and the first kustomization:
 
 ```bash
-kubectl apply -f 
+kubectl apply -f gitops/host/host-gitrepo.yaml
+kubectl apply -f gitops/host/host-kustomization.yaml
+```
 
+This deploys everything needed for the host cluster.
+
+```bash
+kubectl get kustomizations.kustomize.toolkit.fluxcd.io -A
+kubectl get helmreleases.kustomize.toolkit.fluxcd.io -A
+```
+
+```bash
+kubectl get gateway -n istio-system
+```
+
+The LoadBalancer IP is the public IP of the Istio Gateway; it will be attached to the DNS record for the tenant API.
+
+Note:
+
+Due to this [issue](https://github.com/kubernetes-sigs/azuredisk-csi-driver/issues/2777), you need to run this command:
+
+```bash
+kubectl apply -f https://raw.githubusercontent.com/andyzhangx/demo/refs/heads/master/aks/download-v6-disk-rules.yaml
+```

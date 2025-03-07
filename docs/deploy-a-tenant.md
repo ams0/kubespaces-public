@@ -17,7 +17,7 @@ $tenant-$org . \
 --set tenant.name=$tenant \
 --set tenant.org=$org \
 --set tenant.domain=$domain \
---set controlPlane.distro.k8s.version: "v1.31.1" \
+--set controlPlane.distro.k8s.version="v1.31.1" \
 --set "vcluster.exportKubeConfig.server=https://api.$tenant.$org.$location_short.$cloud.$domain" \
 --set "vcluster.controlPlane.proxy.extraSANs[0]=api.$tenant.$org.$location_short.$cloud.$domain"
 ```

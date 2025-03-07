@@ -1,6 +1,6 @@
 apiVersion: v2
-name: vcluster
-description: A Helm chart for deploying vclusters
+name: tenant
+description: A Helm chart for deploying vclusters in a multi-tenant environment
 
 # A chart can be either an 'application' or a 'library' chart.
 #
